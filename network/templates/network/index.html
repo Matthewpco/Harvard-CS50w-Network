@@ -1,0 +1,96 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <div id="index">
+        <h2>All Posts</h2>
+        {% if user.is_authenticated %}
+
+            <section id="add-post-section">
+                <h3>New Post</h3>
+
+                <form action="{% url 'create' %}" id="add-post-form" method="post">
+                    {% csrf_token %}
+
+                    <div class="form-field">
+                        {{ form.content }}
+                    </div>
+
+                    <button type="submit">Submit</button>
+                </form>
+
+            </section>
+            
+        {% else %}
+
+            <section id="add-post-section">
+                <h3>Please sign in or register above to create a post.</h3>
+            </section>
+
+        {% endif %}
+
+        <section id="posts-section">
+
+            {% for post in page_obj %}
+
+                <div class="post">
+                    <h4><a href="{% url 'profile' post.author.id %}">{{ post.author }}</a></h4>
+
+                    <p id="content-{{ post.id }}">{{ post.content }}</p>
+
+                    <form action="{% url 'edit' post.id %}" id="edit-post-form-{{ post.id }}" class="hidden" method="post">
+                        {% csrf_token %}
+    
+                        <div class="form-field">
+                            {{ form.content }}
+                        </div>
+    
+                        <button type="submit">Submit</button>
+                    </form>
+                    
+                    <p>{{ post.timestamp }}</p>
+                    <p id="likes-{{ post.id }}">{{ post.liked_by.count }}</p>
+
+
+                    {% if user.is_authenticated %}
+                        {% if post.id in user_likes %}
+                            <button id="unlike-{{ post.id }}" onClick="unlike({{ post.id }})">Unlike</button>
+                        {% else %}
+                            <button id="like-{{ post.id }}" onClick="like({{ post.id }})">Like</button>
+                        {% endif %}
+
+                        {% if user == post.author %}
+                            <button id="post-edit-{{ post.id }}" onClick="editPost({{ post.id }})">Edit</button>
+                        {% endif %}
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+
+        </section>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/controllers.js' %}"></script>
+{% endblock %}

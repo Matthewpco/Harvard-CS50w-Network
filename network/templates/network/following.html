@@ -1,0 +1,39 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <div id="index">
+        <h2>Following All Posts</h2>
+
+        <section id="posts-section">
+
+            {% for post in page_obj %}
+
+                <div class="post">
+                    <h4><a href="{% url 'profile' post.author.id %}">{{ post.author }}</a></h4>
+                    <p>{{ post.content }}</p>
+                    <p>{{ post.timestamp }}</p>
+                </div>
+
+            {% endfor %}
+
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+
+        </section>
+    </div>
+{% endblock %}

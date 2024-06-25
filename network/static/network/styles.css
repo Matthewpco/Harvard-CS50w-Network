@@ -1,0 +1,35 @@
+body {
+    color: midnightblue;
+    background-color: whitesmoke;
+}
+
+#index {
+    padding: 1%;
+}
+
+#index #add-post-form #id_content {
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 8px;
+}
+
+#add-post-section {
+    border: 1px solid lightsteelblue;
+    padding: 1%;
+    margin: 1% 0;
+}
+
+#posts-section {
+    padding: 0 0 1% 0;
+    border-bottom: 1px solid lightsteelblue;
+}
+
+.post {
+    border: 1px solid lightsteelblue;
+    padding: 1%;
+    margin: 1% 0;
+}
+
+.hidden {
+    display: none;
+}
