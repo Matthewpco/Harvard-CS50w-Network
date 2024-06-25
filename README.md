@@ -1,10 +1,10 @@
 ![](https://raw.githubusercontent.com/Matthewpco/Harvard-CS50w-Network/main/Network-screenshot.png)
 
-# CS50w Mail Single Page Application
+# CS50w Network Single Page Application
 
 <br>
 
-## Full stack wep application with the ability to create and send messages, view your inbox, and archive messages.
+## Full stack wep application with the ability to create and edit posts and likes as well as follow users.
 
 <br>
 
